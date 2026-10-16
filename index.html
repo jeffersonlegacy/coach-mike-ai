@@ -374,7 +374,11 @@
         <section class="col" aria-label="Psychometric Radar Visualization">
           <div class="panel-head mono">
             <span>02 // DUAL-VECTOR TELEMETRY OVERLAY</span>
-            <span>RED: SUBJECT | BLUE: FDSE BENCHMARK</span>
+            <select id="benchmark-select" class="mono" style="background: var(--paper); color: var(--ink); border: 1px solid var(--ink); padding: 0.18rem 0.45rem; font-size: 0.66rem;">
+              <option value="fdse">BENCHMARK: FORWARD-DEPLOYED AI ENG</option>
+              <option value="applied">BENCHMARK: APPLIED AI PRODUCT ENG</option>
+              <option value="solutions">BENCHMARK: AI SOLUTIONS ARCHITECT</option>
+            </select>
           </div>
 
           <div class="chart-stage">
@@ -430,7 +434,11 @@
         educator: [88, 85, 97, 86, 92],
       };
 
-      const BENCHMARK = [90, 92, 85, 88, 90];
+      const BENCHMARKS = {
+        fdse: { label: "FDSE Role Benchmark", vec: [90, 92, 85, 88, 90] },
+        applied: { label: "Applied AI Product Benchmark", vec: [94, 95, 82, 85, 92] },
+        solutions: { label: "AI Solutions Architect Benchmark", vec: [92, 86, 94, 90, 89] },
+      };
       const LABELS = ["Analytical Rigor", "Execution Velocity", "Cognitive Empathy", "Ambiguity Tolerance", "Systems Resilience"];
 
       const inputs = [
@@ -447,6 +455,7 @@
         document.getElementById("v-ambiguity-val"),
         document.getElementById("v-resilience-val"),
       ];
+      const benchmarkSelect = document.getElementById("benchmark-select");
 
       const ctx = document.getElementById("radar-canvas").getContext("2d");
       const radarChart = new Chart(ctx, {
@@ -463,8 +472,8 @@
               pointBackgroundColor: "#d92323",
             },
             {
-              label: "FDSE Role Benchmark",
-              data: BENCHMARK,
+              label: BENCHMARKS.fdse.label,
+              data: [...BENCHMARKS.fdse.vec],
               backgroundColor: "rgba(29, 78, 216, 0.06)",
               borderColor: "#1d4ed8",
               borderDash: [4, 4],
@@ -481,8 +490,8 @@
               min: 0,
               max: 100,
               ticks: { stepSize: 20, backdropColor: "transparent", color: "#787882", font: { family: "JetBrains Mono", size: 10 } },
-              grid: { color: "#cfcbr0" },
-              angleLines: { color: "#cfcbr0" },
+              grid: { color: "#cfcbc0" },
+              angleLines: { color: "#cfcbc0" },
               pointLabels: { color: "#111113", font: { family: "JetBrains Mono", size: 10, weight: "600" } },
             },
           },
@@ -501,11 +510,14 @@
           return v;
         });
 
+        const activeBench = BENCHMARKS[benchmarkSelect.value] || BENCHMARKS.fdse;
         radarChart.data.datasets[0].data = vec;
+        radarChart.data.datasets[1].label = activeBench.label;
+        radarChart.data.datasets[1].data = activeBench.vec;
         radarChart.update();
 
-        // Compute Euclidean alignment against FDSE benchmark
-        const sqDiff = vec.reduce((acc, v, i) => acc + Math.pow(v - BENCHMARK[i], 2), 0);
+        // Compute Euclidean alignment against selected role benchmark
+        const sqDiff = vec.reduce((acc, v, i) => acc + Math.pow(v - activeBench.vec[i], 2), 0);
         const rmsd = Math.sqrt(sqDiff / vec.length);
         const alignment = Math.max(0, Math.min(99.9, 100 - rmsd * 0.65));
 
@@ -535,6 +547,7 @@
           schemaValidation: {
             valid: true,
             parseErrors: 0,
+            benchmarkTarget: activeBench.label,
           },
           telemetry: {
             analyticalRigor: vec[0],
@@ -544,7 +557,7 @@
             systemsResilience: vec[4],
           },
           diagnostics: {
-            fdseAlignmentPct: Number(alignment.toFixed(1)),
+            roleAlignmentPct: Number(alignment.toFixed(1)),
             dominantAxis: LABELS[maxIdx],
             frictionIndex,
             directives: [d1, d2],
@@ -555,6 +568,7 @@
       }
 
       inputs.forEach((el) => el.addEventListener("input", recompute));
+      benchmarkSelect.addEventListener("change", recompute);
 
       document.querySelectorAll("[data-archetype]").forEach((btn) => {
         btn.addEventListener("click", () => {
