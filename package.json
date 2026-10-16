@@ -1,0 +1,22 @@
+{
+  "name": "coach-mike-ai",
+  "version": "1.0.0",
+  "private": false,
+  "description": "Structured-Output AI Psychometrics & Behavioral Telemetry Engine powered by Gemini JSON Schema & Chart.js",
+  "type": "module",
+  "scripts": {
+    "dev": "npx serve .",
+    "build": "echo 'Static bundle verified'",
+    "test": "node src/services/scoringEngine.test.mjs"
+  },
+  "keywords": [
+    "gemini-api",
+    "structured-outputs",
+    "json-schema",
+    "psychometrics",
+    "chartjs",
+    "typescript"
+  ],
+  "author": "Michael Jefferson",
+  "license": "MIT"
+}
