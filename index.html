@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Coach Mike AI — Clinical Psychometric &amp; Deterministic JSON Schema Console</title>
+    <title>Coach Mike AI — Interactive Coaching &amp; Role-Alignment Visualizer</title>
     <meta
       name="description"
-      content="Swiss clinical psychometric diagnostic engine enforcing strict Gemini API JSON response schemas with dual-vector Chart.js telemetry."
+      content="Interactive coaching prototype and role-alignment visualizer using authored Chart.js heuristic benchmark vectors and a reference Gemini JSON responseSchema contract."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -286,7 +286,7 @@
   <body>
     <div class="shell">
       <div class="top-bar mono">
-        <span>CLINICAL INSTRUMENT // COACH MIKE AI — DETERMINISTIC GEMINI JSON SCHEMA PSYCHOMETRICS</span>
+        <span>INTERACTIVE PROTOTYPE // COACH MIKE AI — HEURISTIC ROLE-ALIGNMENT VISUALIZER &amp; REFERENCE JSON SCHEMA</span>
         <div>
           <a href="https://michael-jefferson-portfolio.vercel.app">← PORTFOLIO</a>
           <a href="https://github.com/jeffersonlegacy/coach-mike-ai" target="_blank" rel="noopener noreferrer">GITHUB REPO ↗</a>
@@ -295,19 +295,19 @@
 
       <header>
         <div>
-          <p class="kicker mono">COGNITIVE NEUROSCIENCE UX · GEMINI RESPONSESCHEMA CONTRACT · CHART.JS TELEMETRY</p>
-          <h1>Coach Mike AI — Behavioral Telemetry Console</h1>
+          <p class="kicker mono">INTERACTIVE COACHING VISUALIZER · AUTHORED ROLE BENCHMARKS · REFERENCE GEMINI RESPONSESCHEMA</p>
+          <h1>Coach Mike AI — Role-Alignment &amp; Coaching Prototype</h1>
         </div>
         <div class="schema-status mono" id="schema-badge">
-          SCHEMA VALIDATION: PASS (0 PARSE ERRORS)
+          MODE: CLIENT-SIDE HEURISTIC SIMULATOR + REFERENCE SCHEMA
         </div>
       </header>
 
       <div class="diagnostic-grid">
         <!-- COL 1: INPUT VECTORS -->
-        <section class="col" aria-label="Psychometric Vector Inputs">
+        <section class="col" aria-label="Heuristic Vector Inputs">
           <div class="panel-head mono">
-            <span>01 // COGNITIVE INPUT VECTORS</span>
+            <span>01 // SELF-ASSESSMENT INPUT VECTORS</span>
             <span>SCALE 0–100</span>
           </div>
           <div class="panel-body">
@@ -404,17 +404,17 @@
 
           <div class="synthesis-box">
             <div class="mono" style="font-size: 0.7rem; font-weight: 600; color: var(--ink-dim)">
-              DETERMINISTIC COACHING SYNTHESIS (GENERATED FROM TYPED SCHEMA):
+              HEURISTIC COACHING NOTES (COMPUTED FROM AUTHORED BENCHMARK TARGETS):
             </div>
             <div class="directive-item" id="dir-1"></div>
             <div class="directive-item" id="dir-2" style="border-left-color: var(--cobalt)"></div>
           </div>
         </section>
 
-        <!-- COL 3: STRICT GEMINI JSON SCHEMA PAYLOAD -->
-        <aside class="col" aria-label="Validated JSON Schema Payload">
+        <!-- COL 3: REFERENCE GEMINI JSON SCHEMA PAYLOAD -->
+        <aside class="col" aria-label="Reference JSON Schema Payload">
           <div class="panel-head mono">
-            <span>03 // VALIDATED GEMINI RESPONSESCHEMA</span>
+            <span>03 // REFERENCE GEMINI RESPONSESCHEMA PAYLOAD</span>
             <button type="button" id="btn-export" style="padding: 0.2rem 0.5rem; font-size: 0.65rem">
               EXPORT .JSON ↓
             </button>
@@ -539,28 +539,29 @@
         document.getElementById("dir-2").textContent = d2;
 
         currentPayload = {
-          model: "gemini-2.5-pro",
-          generationConfig: {
+          executionMode: "client-side-heuristic-simulation",
+          schemaContract: "reference-gemini-responseSchema",
+          targetModelConfig: {
+            model: "gemini-2.5-pro",
             responseMimeType: "application/json",
             temperature: 0.0,
           },
-          schemaValidation: {
-            valid: true,
-            parseErrors: 0,
+          benchmarkOverlay: {
+            source: "authored-role-benchmark",
             benchmarkTarget: activeBench.label,
           },
-          telemetry: {
+          selfAssessmentVector: {
             analyticalRigor: vec[0],
             executionVelocity: vec[1],
             cognitiveEmpathy: vec[2],
             ambiguityTolerance: vec[3],
             systemsResilience: vec[4],
           },
-          diagnostics: {
+          heuristicSummary: {
             roleAlignmentPct: Number(alignment.toFixed(1)),
             dominantAxis: LABELS[maxIdx],
             frictionIndex,
-            directives: [d1, d2],
+            coachingNotes: [d1, d2],
           },
         };
 
@@ -585,7 +586,7 @@
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = "coach-mike-psychometric-schema.json";
+        a.download = "coach-mike-role-alignment-schema.json";
         a.click();
         URL.revokeObjectURL(url);
       });
